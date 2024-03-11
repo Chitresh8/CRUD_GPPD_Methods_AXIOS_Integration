@@ -21,8 +21,17 @@ export const Axios = () => {
     event.preventDefault();
     //post method - to send  data to server
     if (userId && id && title && body) {
+      const headers = {
+        "Content-Type": "application/json", // Assuming JSON data
+        // Add any other headers as needed
+        "Access-Control-Allow-Origin": "*",
+      };
       axios
-        .post("https://jsonplaceholder.typicode.com/posts", formData)
+        .post(
+          "https://back-end-data-api-default-rtdb.firebaseio.com/crudData",
+          formData,
+          { headers: headers }
+        )
         .then((response) => console.log("Response==>", response.data))
         .catch((error) => ("Error==>", error));
       setData([...data, formData]);
@@ -32,6 +41,8 @@ export const Axios = () => {
         title: "",
         body: "",
       });
+    } else {
+      alert("Please fill all the details");
     }
   };
 
@@ -48,15 +59,36 @@ export const Axios = () => {
     // axios.get('https://jsonplaceholder.typicode.com/posts'+editId); we can use this method also
   };
 
-  useEffect(() => {
-    //get method- to receive  data
+  function getData() {
     axios
       .get("https://jsonplaceholder.typicode.com/posts")
       .then((res) => {
-        console.log("res===>", setData(res.data));
+        setData(res.data);
       })
-      .catch((err) => console.log("err===>", err));
-  }, [data]);
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    //get method- to receive  data
+    // axios
+    //   .get("https://jsonplaceholder.typicode.com/posts")
+    //   .then((res) => {
+    //     console.log("res===>", setData(res.data));
+    //   })
+    //   .catch((err) => console.log("err===>", err));
+  }, []);
+
+  const handleDelete = (editId) => {
+    axios
+      .delete(`https://jsonplaceholder.typicode.com/posts/${editId}`)
+      .then((res) => console.log(res.data))
+      // .then(getData())
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Fragment>
@@ -136,7 +168,7 @@ export const Axios = () => {
                     </button>
                     <button
                       onClick={() => {
-                        handleDelete(index);
+                        handleDelete(el.id);
                       }}
                     >
                       Delete
