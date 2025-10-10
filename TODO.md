@@ -1,0 +1,11 @@
+- [x] Make APIs consistent: Use jsonplaceholder for all operations (POST, PUT, DELETE).
+- [x] Add editing state and mode.
+- [x] Implement PUT for update in handleSubmit.
+- [x] Call getData in useEffect to load initial data.
+- [x] After POST/PUT, call getData to refresh data.
+- [x] After DELETE, call getData to refresh data.
+- [x] Remove empty handleSubmitt and onClick from submit button.
+- [x] Use el.id as key in map.
+- [x] Add loading state for API calls.
+- [x] Improve error handling with user feedback.
+- [x] Clean up code: remove unnecessary comments, headers.
